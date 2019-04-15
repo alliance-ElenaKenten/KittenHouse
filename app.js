@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var apiRouter = require('./routes/book');
 
+var cors = require('cors');
 var app = express();
 
 var mongoose = require('mongoose');
@@ -13,11 +14,12 @@ mongoose.connect('mongodb://localhost/mean-angular6', { promiseLibrary: require(
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'dist/mean-angular6')));
-app.use('/', express.static(path.join(__dirname, 'dist/mean-angular6')));
+app.use(express.static(path.join(__dirname, 'dist/mean-angular-node')));
+app.use('/', express.static(path.join(__dirname, 'dist/mean-angular-node')));
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler

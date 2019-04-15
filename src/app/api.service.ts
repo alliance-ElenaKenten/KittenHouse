@@ -4,9 +4,9 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map } from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'})
 };
-const apiUrl = '/api';
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,27 +36,27 @@ export class ApiService {
   };
 
   getBooks(): Observable<any> {
-    return this.http.get(apiUrl, httpOptions).pipe(
+    return this.http.get('http://localhost:3030/api', httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError));
   };
 
   getBook(id: string): Observable<any> {
-    const url = `${apiUrl}/${id}`;
+    const url = `http://localhost:3030/api/${id}`;
     return this.http.get(url, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError));
   };
 
   postBook(data): Observable<any> {
-    return this.http.post(apiUrl, data, httpOptions)
+    return this.http.post('http://localhost:3030/api', data, httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   };
 
   updateBook(id, data): Observable<any> {
-    const url = `${apiUrl}/${id}`;
+    const url = `http://localhost:3030/api/${id}`;
     return this.http.put(url, data, httpOptions)
       .pipe(
         catchError(this.handleError)
@@ -64,7 +64,7 @@ export class ApiService {
   };
 
   deleteBook(id: string): Observable<{}> {
-    const url = `${apiUrl}/${id}`;
+    const url = `http://localhost:3030/api/${id}`;
     return this.http.delete(url, httpOptions)
       .pipe(
         catchError(this.handleError)
